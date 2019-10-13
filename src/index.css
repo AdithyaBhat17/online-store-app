@@ -1,5 +1,5 @@
 html {
-  background: #000;
+  background: #fff;
   height: 100%;
 }
 
@@ -12,11 +12,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   width: 375px;
   height: 100%;
-  background: #fff;
+  background: #000;
+  color: #fff;
 }
 
 .App {
-  background: #fff;
+  background: #000;
   padding-bottom: 15px;
 }
 
@@ -40,5 +41,21 @@ button {
   background-color: #F8AC08;
   border: none;
   padding: 5px 10px;
+}
+
+.total {
+  position: sticky;
+  bottom: 0;
+  width: 375px;
+  background-color: #F8AC08;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  color: #000;
+}
+
+.items {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
 }
 

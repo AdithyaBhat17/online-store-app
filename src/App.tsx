@@ -5,7 +5,7 @@ const initialStore = [{
   name: 'Chicken Momo',
   image: 'http://spicyworld.in/recipeimages/chicken-momo.jpg',
   price: 10.50,
-  count: 4
+  count: 0
 }, {
   id: 2,
   name: 'Spicy Mexican Potatoes',
@@ -20,30 +20,23 @@ const initialStore = [{
   count: 0
 }]
 
-class App extends React.Component {
+const App: React.FC = () => {
+  const [store, setStore] = React.useState(initialStore)
 
-  state = {
-    store: initialStore
-  }
-
-  decrementItem = (item: any) => {
-    let { store } = this.state
-    store[store.indexOf(item)].count > 0 ?
+  const decrementItem = (item: any) => {    
+    store[store.indexOf(item)].count !== 0 ?
     store[store.indexOf(item)].count -= 1 :
     store[store.indexOf(item)].count = 0
-    this.setState({store})
+    setStore([...store])
   }
 
-  incrementItem = (item: any) => {
-    let { store } = this.state
+  const incrementItem = (item: any) => {
     store[store.indexOf(item)].count += 1
-    this.setState({store})
+    setStore([...store])
   }
 
-  render () {
-    const { store } = this.state
-    // TODO: add a cart checkout functionality
-    return (
+  return (
+    <div style={{backgroundColor: '#000'}}>
       <div className="container App">
         <div className="row">
           {store && store.map((item: any) => (
@@ -52,14 +45,14 @@ class App extends React.Component {
               <p>{item.name}</p>
               <p>${item.price}</p> 
               <div className="btn-grp">
-                <button onClick={() => this.decrementItem(item)}>
+                <button onClick={() => decrementItem(item)}>
                   -
                 </button>
-                <button onClick={() => this.incrementItem(item)}>
+                <button onClick={() => incrementItem(item)}>
                   +
                 </button>
                 <span>
-                  {item.count}
+                  &nbsp;{item.count}
                 </span>
               </div> 
               <br/>
@@ -67,8 +60,23 @@ class App extends React.Component {
           ))}
         </div>
       </div>
-    );
-  }
-}
+      {/* @todo refactor code
+      @body move this to a new component */}
+      <div className="total">
+        {store.map((item: any) => item.count > 0 && (
+          <div className="items" key={item.id}>
+            <span>
+              {item.name}&nbsp;
+              <small>x {item.count}</small>
+            </span>
+            <span>
+              {`$${(item.price * item.count).toFixed(2)}`}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+} 
 
 export default App;
