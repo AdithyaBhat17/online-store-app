@@ -1,4 +1,5 @@
 import React from 'react';
+import Cart from './Cart';
 
 const initialStore = [{
   id: 1,
@@ -35,6 +36,14 @@ const App: React.FC = () => {
     setStore([...store])
   }
 
+  const getTotalPrice = () => {
+    let price: number = 0
+    store.forEach(item => {
+      price += item.count * item.price
+    })
+    return price
+  }
+
   return (
     <div style={{backgroundColor: '#000'}}>
       <div className="container App">
@@ -60,21 +69,7 @@ const App: React.FC = () => {
           ))}
         </div>
       </div>
-      {/* @todo refactor code
-      @body move this to a new component */}
-      <div className="total">
-        {store.map((item: any) => item.count > 0 && (
-          <div className="items" key={item.id}>
-            <span>
-              {item.name}&nbsp;
-              <small>x {item.count}</small>
-            </span>
-            <span>
-              {`$${(item.price * item.count).toFixed(2)}`}
-            </span>
-          </div>
-        ))}
-      </div>
+      <Cart store={store} getTotalPrice={getTotalPrice}/>
     </div>
   )
 } 
